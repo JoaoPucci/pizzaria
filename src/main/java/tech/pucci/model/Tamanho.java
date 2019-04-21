@@ -19,9 +19,26 @@ public class Tamanho {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
 	private String descricao;
-	private BigDecimal valor = BigDecimal.ZERO;
+	
+	private BigDecimal valor;
+	
 	@JsonProperty(access = Access.WRITE_ONLY)
-	private int tempoPreparo = 0;
+	private int tempoPreparo;
+	
+	public Tamanho() {}
+	
+	public Tamanho(String descricao, BigDecimal valor, int tempoPreparo) {
+		this.descricao = descricao;
+		this.valor = valor;
+		this.tempoPreparo = tempoPreparo;
+	}
+	
+	public Tamanho(String descricao, Double valor, int tempoPreparo) {
+		this.descricao = descricao;
+		this.valor = BigDecimal.valueOf(valor);
+		this.tempoPreparo = tempoPreparo;
+	}
 
 }
