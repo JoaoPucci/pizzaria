@@ -2,12 +2,14 @@ package tech.pucci.bootstrap;
 
 import java.math.BigDecimal;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import tech.pucci.model.Pedido;
+import tech.pucci.model.Adicional;
 import tech.pucci.model.Sabor;
 import tech.pucci.model.Tamanho;
+import tech.pucci.repository.AdicionalRepository;
 import tech.pucci.repository.PedidoRepository;
 import tech.pucci.repository.SaborRepository;
 import tech.pucci.repository.TamanhoRepository;
@@ -15,24 +17,27 @@ import tech.pucci.repository.TamanhoRepository;
 @Component
 public class BootstrapData implements CommandLineRunner {
 	
+	@Autowired
 	private TamanhoRepository tamanhoRepository;
+	@Autowired
 	private SaborRepository saborRepository;
+	@Autowired
 	private PedidoRepository pedidoRepository;
-	
-	public BootstrapData(TamanhoRepository tamanhoRepository, SaborRepository saborRepository, PedidoRepository pedidoRepository) {
-		this.tamanhoRepository = tamanhoRepository;
-		this.saborRepository = saborRepository;
-		this.pedidoRepository = pedidoRepository;
-	}
+	@Autowired
+	private AdicionalRepository adicionalRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("Loading initial data...");
+		System.out.println("Carregando dados iniciais...");
+
 		cadastrarTamanhos();
 		cadastrarSabores();	
-		System.out.println(pedidoRepository.findAll());
+		cadastrarAdicionais();
+		
+		System.out.println("Carregamento completo");
+		
 	}
-	
+
 	private void cadastrarTamanhos() {
 		Tamanho tamanhoPequena = new Tamanho();
 		tamanhoPequena.setDescricao("Pequena");
@@ -68,6 +73,26 @@ public class BootstrapData implements CommandLineRunner {
 		saborPortuguesa.setDescricao("Portuguesa");
 		saborPortuguesa.setTempoAdicional(5);
 		saborRepository.save(saborPortuguesa);
+	}
+	
+	private void cadastrarAdicionais() {
+		Adicional extraBacon = new Adicional();
+		extraBacon.setDescricao("Extra Bacon");
+		extraBacon.setTempo(0);
+		extraBacon.setValor(BigDecimal.valueOf(3));
+		adicionalRepository.save(extraBacon);
+		
+		Adicional semCebola = new Adicional();
+		semCebola.setDescricao("Sem Cebola");
+		semCebola.setTempo(0);
+		semCebola.setValor(BigDecimal.valueOf(0));
+		adicionalRepository.save(semCebola);
+		
+		Adicional bordaRecheada = new Adicional();
+		bordaRecheada.setDescricao("Borda Recheada");
+		bordaRecheada.setTempo(5);
+		bordaRecheada.setValor(BigDecimal.valueOf(5));
+		adicionalRepository.save(bordaRecheada);
 	}
 	
 }
