@@ -19,8 +19,18 @@ public class Adicional {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
 	private String descricao;
-	private BigDecimal valor = BigDecimal.ZERO;
+	
+	private BigDecimal valor;
+	
 	@JsonProperty(access = Access.WRITE_ONLY)
-	private int tempo = 0;
+	private int tempoPreparo;
+	
+	public Adicional() {}
+	
+	public Adicional(String descricao) {
+		this.descricao = descricao;
+		this.valor = BigDecimal.ZERO;
+	}
 }

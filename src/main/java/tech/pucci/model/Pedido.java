@@ -23,19 +23,24 @@ public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
 	@ManyToOne
 	@JoinColumn
 	private Tamanho tamanho;
+	
 	@ManyToOne
 	@JoinColumn
 	private Sabor sabor;
+	
 	@ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "pedido_adicional",
     joinColumns = @JoinColumn(name = "pedido_id", referencedColumnName = "id"),
     inverseJoinColumns = @JoinColumn(name = "adicional_id", referencedColumnName = "id"))
 	private Set<Adicional> adicionais;
+	
 	@Transient
 	private int tempoPreparo = 0;
+	
 	@Transient
 	private BigDecimal valor = BigDecimal.ZERO;
 	
@@ -54,7 +59,7 @@ public class Pedido {
 		int tempoAdicional = 0;
 		
 		if (hasAdicionais()) {
-			tempoAdicional = this.getAdicionais().stream().mapToInt(adicional -> adicional.getTempo()).sum();	
+			tempoAdicional = this.getAdicionais().stream().mapToInt(adicional -> adicional.getTempoPreparo()).sum();	
 		}
 		
 		this.setTempoPreparo(this.getTamanho().getTempoPreparo() + this.getSabor().getTempoAdicional() + tempoAdicional);
@@ -66,7 +71,7 @@ public class Pedido {
 	
 	public boolean hasAdicionaisRepetidos() {
 		for(Adicional adicional : this.getAdicionais()) {
-			boolean isRepetido = this.getAdicionais().stream().filter(o -> o.getId() == adicional.getId()).count() > 1;
+			boolean isRepetido = this.getAdicionais().stream().filter(adicional2 -> adicional2.getId() == adicional.getId()).count() > 1;
 			
 			if (isRepetido) {
 				return true;
