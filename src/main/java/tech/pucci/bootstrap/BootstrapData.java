@@ -5,8 +5,10 @@ import java.math.BigDecimal;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import tech.pucci.model.Pedido;
 import tech.pucci.model.Sabor;
 import tech.pucci.model.Tamanho;
+import tech.pucci.repository.PedidoRepository;
 import tech.pucci.repository.SaborRepository;
 import tech.pucci.repository.TamanhoRepository;
 
@@ -15,20 +17,20 @@ public class BootstrapData implements CommandLineRunner {
 	
 	private TamanhoRepository tamanhoRepository;
 	private SaborRepository saborRepository;
+	private PedidoRepository pedidoRepository;
 	
-	public BootstrapData(TamanhoRepository tamanhoDao, SaborRepository saborRepository) {
-		this.tamanhoRepository = tamanhoDao;
+	public BootstrapData(TamanhoRepository tamanhoRepository, SaborRepository saborRepository, PedidoRepository pedidoRepository) {
+		this.tamanhoRepository = tamanhoRepository;
 		this.saborRepository = saborRepository;
+		this.pedidoRepository = pedidoRepository;
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-		
 		System.out.println("Loading initial data...");
 		cadastrarTamanhos();
-		cadastrarSabores();
-
-		System.out.println(saborRepository.findAll());
+		cadastrarSabores();	
+		System.out.println(pedidoRepository.findAll());
 	}
 	
 	private void cadastrarTamanhos() {
