@@ -7,6 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import lombok.Data;
 
 @Data
@@ -17,7 +20,8 @@ public class Tamanho {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String descricao;
-	private BigDecimal valor;
-	private int tempoPreparo;
+	private BigDecimal valor = BigDecimal.ZERO;
+	@JsonProperty(access = Access.WRITE_ONLY)
+	private int tempoPreparo = 0;
 
 }
