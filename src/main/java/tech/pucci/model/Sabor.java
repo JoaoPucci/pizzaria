@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import lombok.Data;
 
 @Data
@@ -15,5 +18,6 @@ public class Sabor {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String descricao;
-	private int tempoAdicional;
+	@JsonProperty(access = Access.WRITE_ONLY)
+	private int tempoAdicional = 0;
 }

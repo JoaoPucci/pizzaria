@@ -10,7 +10,6 @@ import tech.pucci.model.Adicional;
 import tech.pucci.model.Sabor;
 import tech.pucci.model.Tamanho;
 import tech.pucci.repository.AdicionalRepository;
-import tech.pucci.repository.PedidoRepository;
 import tech.pucci.repository.SaborRepository;
 import tech.pucci.repository.TamanhoRepository;
 
@@ -21,8 +20,6 @@ public class BootstrapData implements CommandLineRunner {
 	private TamanhoRepository tamanhoRepository;
 	@Autowired
 	private SaborRepository saborRepository;
-	@Autowired
-	private PedidoRepository pedidoRepository;
 	@Autowired
 	private AdicionalRepository adicionalRepository;
 
